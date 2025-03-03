@@ -1,20 +1,19 @@
+// @ts-nocheck
 import * as THREE from 'three';
-
 export default class Camera {
-  // 当前相机实例
-  camera: THREE.OrthographicCamera | THREE.PerspectiveCamera;
+  constructor(_options) {
+    // Options
+    this.time = _options.time
+    this.sizes = _options.sizes
+    this.renderer = _options.renderer
 
-  constructor () {
+    // Set up
+    this.container = new THREE.Object3D()
+    this.container.matrixAutoUpdate = false
 
-    this.camera = this.init();
+    this.target = new THREE.Vector3(0, 0, 0)
+    this.targetEased = new THREE.Vector3(0, 0, 0)
+    this.easing = 0.15
+
   }
-
-  init () {
-    return new THREE.OrthographicCamera(100, 100, 100, 100, 100, 1000);
-  }
-
-  updateCamera() {
-    
-  }
-
 }
