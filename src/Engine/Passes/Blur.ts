@@ -1,8 +1,7 @@
 //@ts-nocheck
 import shaderFragment from '../shaders/blur/fragment.glsl'
 import shaderVertex from '../shaders/blur/vertex.glsl'
-// import * as THREE from 'three';
-console.log(shaderFragment, 'shaderFragment', shaderVertex, 'shaderVertex')
+
 export default {
     uniforms: {
         tDiffuse: {

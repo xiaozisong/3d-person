@@ -57,8 +57,6 @@ export default class Engine {
     this.passes.renderPass = new RenderPass(this.scene, this.camera.instance)
 
     this.passes.horizontalBlurPass = new ShaderPass(BlurPass)
-     // 添加调试代码
-     console.log('Shader Program Status:', this.passes.horizontalBlurPass.material)
     this.passes.horizontalBlurPass.strength = 1
     this.passes.horizontalBlurPass.material.uniforms.uResolution.value = new THREE.Vector2(this.sizes.viewport.width, this.sizes.viewport.height)
     this.passes.horizontalBlurPass.material.uniforms.uStrength.value = new THREE.Vector2(this.passes.horizontalBlurPass.strength, 0)
@@ -69,12 +67,12 @@ export default class Engine {
     this.passes.verticalBlurPass.material.uniforms.uStrength.value = new THREE.Vector2(0, this.passes.verticalBlurPass.strength)
 
     this.passes.glowsPass = new ShaderPass(GlowsPass)
-    this.passes.glowsPass.color = '#ffcfe0'
-    this.passes.glowsPass.material.uniforms.uPosition.value = new THREE.Vector2(0, 0.25)
-    this.passes.glowsPass.material.uniforms.uRadius.value = 0.7
+    this.passes.glowsPass.color = '#0052CC'
+    this.passes.glowsPass.material.uniforms.uPosition.value = new THREE.Vector2(0, -0.2)
+    this.passes.glowsPass.material.uniforms.uRadius.value = 1.5
     this.passes.glowsPass.material.uniforms.uColor.value = new THREE.Color(this.passes.glowsPass.color)
     this.passes.glowsPass.material.uniforms.uColor.value.convertLinearToSRGB()
-    this.passes.glowsPass.material.uniforms.uAlpha.value = 0.55
+    this.passes.glowsPass.material.uniforms.uAlpha.value = 0.45
 
     // Add passes
     this.passes.composer.addPass(this.passes.renderPass)
