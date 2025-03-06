@@ -13,7 +13,6 @@ import BlurPass from "./Passes/Blur"
 import GlowsPass from "./Passes/Glows"
 export default class Engine {
   constructor(_options) {
-    console.log({ _options })
     // Options
     this.$canvas = _options.$canvas
 
@@ -24,8 +23,8 @@ export default class Engine {
 
     this.setRenderer()
     this.setCamera()
-    this.setWorld()
     this.setPasses()
+    this.setWorld()
   }
 
   setRenderer() {
@@ -52,13 +51,14 @@ export default class Engine {
 
   setPasses() {
     this.passes = {}
-
     this.passes.composer = new EffectComposer(this.renderer)
 
     // Create passes
     this.passes.renderPass = new RenderPass(this.scene, this.camera.instance)
 
     this.passes.horizontalBlurPass = new ShaderPass(BlurPass)
+     // 添加调试代码
+     console.log('Shader Program Status:', this.passes.horizontalBlurPass.material)
     this.passes.horizontalBlurPass.strength = 1
     this.passes.horizontalBlurPass.material.uniforms.uResolution.value = new THREE.Vector2(this.sizes.viewport.width, this.sizes.viewport.height)
     this.passes.horizontalBlurPass.material.uniforms.uStrength.value = new THREE.Vector2(this.passes.horizontalBlurPass.strength, 0)
@@ -78,19 +78,18 @@ export default class Engine {
 
     // Add passes
     this.passes.composer.addPass(this.passes.renderPass)
-    // this.passes.composer.addPass(this.passes.horizontalBlurPass)
-    // this.passes.composer.addPass(this.passes.verticalBlurPass)
-    // this.passes.composer.addPass(this.passes.glowsPass)
+    this.passes.composer.addPass(this.passes.horizontalBlurPass)
+    this.passes.composer.addPass(this.passes.verticalBlurPass)
+    this.passes.composer.addPass(this.passes.glowsPass)
     // Time tick
     this.time.on('tick', () => {
-      // this.passes.horizontalBlurPass.enabled = this.passes.horizontalBlurPass.material.uniforms.uStrength.value.x > 0
-      // this.passes.verticalBlurPass.enabled = this.passes.verticalBlurPass.material.uniforms.uStrength.value.y > 0
+      this.passes.horizontalBlurPass.enabled = this.passes.horizontalBlurPass.material.uniforms.uStrength.value.x > 0
+      this.passes.verticalBlurPass.enabled = this.passes.verticalBlurPass.material.uniforms.uStrength.value.y > 0
 
       // Renderer
       this.passes.composer.render()
       // this.renderer.domElement.style.background = 'black'
       // this.renderer.render(this.scene, this.camera.instance)
-      console.log(1)
     })
 
     // Resize event
@@ -110,7 +109,6 @@ export default class Engine {
       sizes: this.sizes,
       renderer: this.renderer,
     })
-    console.log(this.camera)
     this.scene.add(this.camera.container)
 
     this.time.on('tick', () => {

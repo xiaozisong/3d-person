@@ -1,7 +1,7 @@
 // @ts-nocheck
 import shaderFragment from '../shaders/glows/fragment.glsl'
 import shaderVertex from '../shaders/glows/vertex.glsl'
-
+// import * as THREE from 'three';
 export default {
     uniforms:
     {
@@ -11,6 +11,6 @@ export default {
         uColor: { type: 'v3', value: null },
         uAlpha: { type: 'f', value: null }
     },
-    // vertexShader: shaderVertex,
-    // fragmentShader: shaderFragment
+    vertexShader: shaderVertex,
+    fragmentShader: shaderFragment
 }
